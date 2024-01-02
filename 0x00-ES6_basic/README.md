@@ -1,0 +1,1 @@
+Started the JS learning journey
