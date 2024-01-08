@@ -1,16 +1,24 @@
 /**
- * Returns a string of set values that start with a specific string.
- * @param {Set} set - Set to filter values from.
- * @param {string} startString - String to check for values starting with.
- * @returns {string} String containing values of the set that start with the specified string.
+ * Joins a set of strings with a dash after stripping the strings of
+ * a leading sub string.
+ * @param {Set<String>} set - A collection of strings.
+ * @param {String} startString - The string to strip from the beginning
+ * of each item in the set.
+ * @returns {String}
  */
 export default function cleanSet(set, startString) {
-  // Filter values from the set that start with the specified string
-  const filteredValues = [...set].filter(value => value.startsWith(startString));
+  const parts = [];
+  if (!set || !startString || !(set instanceof Set) || typeof startString !== 'string') {
+    return '';
+  }
+  for (const value of set.values()) {
+    if (typeof value === 'string' && value.startsWith(startString)) {
+      const valueSubStr = value.substring(startString.length);
 
-  // Join the filtered values with "-" and return as a string
-  const resultString = filteredValues.join('-');
-
-  return resultString;
+      if (valueSubStr && valueSubStr !== value) {
+        parts.push(valueSubStr);
+      }
+    }
+  }
+  return parts.join('-');
 }
-  
